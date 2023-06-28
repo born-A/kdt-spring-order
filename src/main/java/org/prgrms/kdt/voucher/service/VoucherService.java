@@ -28,20 +28,23 @@ public class VoucherService {
     }
 
     public List<Voucher> getVouchers() throws IOException, ClassNotFoundException {
-        List<Voucher> vouchers = voucherRepository.findAll();
-        return vouchers;
+        return voucherRepository.findAll();
     }
 
-    public Voucher save(VoucherType voucherType, Long discount) throws IOException {
-        if(voucherType.equals(VoucherType.Fixed_AMOUNT_VOUCHER)){
-            Voucher createdVoucher = voucherRepository.insert(new FixedAmountVoucher(UUID.randomUUID(), discount));
-            return createdVoucher;
+
+    public Voucher save(VoucherType type, Long discount) throws IOException {
+        VoucherType voucherType = type;
+        switch (voucherType){
+            case FIXED_AMOUNT_VOUCHER, PERCENT_DISCOUNT_VOUCHER -> {
+                System.out.println("voucherType = " + voucherType);
+                return voucherRepository.insert(voucherType.makeVoucher(discount));
+            }
+            default -> throw new RuntimeException("해당 바우처는 발급 불가능합니다");
         }
-        else if (voucherType.equals(VoucherType.PERCENT_DISCOUNT_VOUCHER)) {
-            Voucher createdVoucher = voucherRepository.insert(new PercentDiscountVoucher(UUID.randomUUID(), discount));
-            return createdVoucher;
-        }else{
-            return null;
-        }
+
+    }
+
+    public Voucher useVoucher(Voucher voucher) {
+        return voucher;
     }
 }

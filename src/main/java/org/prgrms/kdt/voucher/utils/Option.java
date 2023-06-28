@@ -1,11 +1,15 @@
 package org.prgrms.kdt.voucher.utils;
 
+import java.util.Arrays;
+
 public enum Option {
-    EXIT("EXIT"), LIST("LIST"), CREATE("CREATE");
+    EXIT, LIST, CREATE;
 
-    private String matchString;
-
-    Option(String matchString) {
-        this.matchString = matchString;
+    public static Option of(String input) {
+        return Arrays.stream(values())
+                .filter(option -> option.name() == input.toUpperCase())
+                .findFirst()
+                .orElseThrow(()-> new RuntimeException("입력이 잘못되었습니다."));
     }
+
 }

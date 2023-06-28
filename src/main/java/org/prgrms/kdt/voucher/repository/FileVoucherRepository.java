@@ -45,12 +45,12 @@ public class FileVoucherRepository implements VoucherRepository {
         objectInputStream.close();
 
         HashMap hashMap = (HashMap) object;
-        Iterator<String> it = hashMap.keySet().iterator();
+        Iterator<UUID> it = hashMap.keySet().iterator();
 
         ArrayList<Voucher> values = new ArrayList<>();
 
         while (it.hasNext()) {
-            String key = it.next();
+            UUID key = it.next();
             Voucher value = (Voucher) hashMap.get(key);
 
             values.add(value);

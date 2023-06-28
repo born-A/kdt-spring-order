@@ -3,6 +3,7 @@ package org.prgrms.kdt.voucher.io;
 import org.prgrms.kdt.voucher.domain.Voucher;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -28,8 +29,9 @@ public class Console {
     }
 
     public void printAll(List<Voucher> voucherList) {
-        for (Voucher voucher : voucherList) {
-            System.out.println("voucher = " + voucher);
-        }
+        Arrays.stream(voucherList.toArray())
+                .forEach( voucher -> {
+                    System.out.println("voucher = " + voucher);
+                });
     }
 }
